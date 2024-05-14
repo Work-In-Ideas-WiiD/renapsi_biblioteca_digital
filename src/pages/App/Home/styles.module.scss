@@ -1,4 +1,25 @@
 .main {
     min-height: 100vh;
     background-color: var(--color-gray-700);
+    padding-left: 21px;
+    padding-right: 21px;
+    max-width: 1093px;
+    margin: 0 auto;
+
+    .search_section {
+        margin-top: 50px;
+
+
+        .label_search_for {
+            color: var(--color-white);
+            font-size: 1.25rem;
+            font-weight: 400;
+            margin-bottom: 21px;
+            display: block;
+
+            strong {
+                font-weight: 700;
+            }
+        }
+    }
 }

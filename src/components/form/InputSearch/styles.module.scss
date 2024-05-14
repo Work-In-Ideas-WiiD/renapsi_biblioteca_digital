@@ -1,0 +1,48 @@
+@import '../../../styles/Global.scss';
+
+.input_wraper {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    height: 60px;
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: rgba($color: $color-gray-700, $alpha: 0.32);
+    border-style: solid;
+    opacity: 0px;
+    background-color: var(--color-white);
+
+    .search_button_wraper {
+        width: 60px;
+        height: 60px;
+
+        .search_button {
+            width: 60px;
+            height: 60px;
+            border: none;
+            background-color: transparent;
+        }
+
+    }
+
+    input {
+        width: 100%;
+        font-size: 1rem;
+        color: var(--color-gray-700);
+        outline: none;
+        border: none;
+
+    }
+
+    .erase_button {
+        width: 60px;
+        height: 60px;
+        border: none;
+        background-color: transparent;
+
+        .erase_text_icon {
+            scale: 50%;
+        }
+    }
+
+}
