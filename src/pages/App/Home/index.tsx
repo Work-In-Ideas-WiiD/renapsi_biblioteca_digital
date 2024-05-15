@@ -4,7 +4,7 @@ import styles from "./styles.module.scss";
 import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Divisor } from "./components/Divisor";
+import { Divisor } from "../../../components/Divisor";
 import { Link } from "react-router-dom";
 
 import ImgBgModuleTest from '../../../assets/imgs/module_test.jpg';
@@ -54,22 +54,17 @@ export function Home() {
             <section className={styles.modules_wraper}>
                 <label className={styles.label_title}>Procure por <strong>módulo</strong></label>
                 <div className={styles.module_list}>
-                    <Link className={styles.module_card} to={"#"}>
+                    <Link className={styles.module_card} to={"/app/modulo/1"}>
                         <article >
                             <img src={ImgBgModuleTest} alt="" />
                         </article>
                     </Link>
-                    <Link className={styles.module_card} to={"#"}>
+                    <Link className={styles.module_card} to={"/app/modulo/1"}>
                         <article >
                             <img src={ImgBgModuleTest} alt="" />
                         </article>
                     </Link>
-                    <Link className={styles.module_card} to={"#"}>
-                        <article >
-                            <img src={ImgBgModuleTest} alt="" />
-                        </article>
-                    </Link>
-                    <Link className={styles.module_card} to={"#"}>
+                    <Link className={styles.module_card} to={"/app/modulo/1"}>
                         <article >
                             <img src={ImgBgModuleTest} alt="" />
                         </article>

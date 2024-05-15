@@ -15,9 +15,9 @@ export function Header({ showBackButton, backButtonRoute }: HeaderProps) {
 
     function goBack() {
         if (backButtonRoute) {
-            navigate(backButtonRoute);
+            return navigate(backButtonRoute);
         }
-        navigate(-1);
+        return navigate(-1);
     }
 
     return (

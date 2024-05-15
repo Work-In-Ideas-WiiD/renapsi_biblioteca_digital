@@ -1,0 +1,36 @@
+.main {
+    min-height: 100vh;
+    background-color: var(--color-gray-700);
+    padding-left: 21px;
+    padding-right: 21px;
+    max-width: 1093px;
+    margin: 0 auto;
+
+    .card_module {
+        margin-top: 43px;
+        width: 100%;
+        aspect-ratio: 21/9;
+        border-radius: 5px;
+        margin-bottom: 24px;
+
+        img {
+            width: 100%;
+            aspect-ratio: 21/9;
+            border-radius: 5px;
+        }
+    }
+
+    .files_wraper {
+        margin-top: 27px;
+        width: 100%;
+
+        .files_list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+    }
+
+}
