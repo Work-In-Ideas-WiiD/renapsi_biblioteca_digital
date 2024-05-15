@@ -26,9 +26,10 @@
             gap: 15px;
 
             .module_card {
+                aspect-ratio: 21/9;
                 width: 100%;
-                max-width: 513px;
-                height: 135px;
+                //max-width: 513px;
+
                 border-radius: 5px;
                 background-color: var(--color-blue-400);
 
@@ -49,7 +50,7 @@
                 flex-direction: row;
 
                 .module_card {
-                    height: 218.42px;
+                    max-width: 513px;
                 }
             }
         }
