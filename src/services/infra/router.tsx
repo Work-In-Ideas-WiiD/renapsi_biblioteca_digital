@@ -3,6 +3,7 @@ import { Login } from "../../pages/Login";
 import { AppPage } from "../../pages/App";
 import { Home } from "../../pages/App/Home";
 import { ModuleList } from "../../pages/App/ModuleList";
+import { SearchPage } from "../../pages/App/SearchPage";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
                     {
                         path: "modulo/:id",
                         element: <ModuleList />
+                    },
+                    {
+                        path: "pesquisa",
+                        element: <SearchPage />
                     }
                 ]
             }

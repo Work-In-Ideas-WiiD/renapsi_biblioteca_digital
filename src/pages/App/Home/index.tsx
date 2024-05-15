@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divisor } from "../../../components/Divisor";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import ImgBgModuleTest from '../../../assets/imgs/module_test.jpg';
 
@@ -17,6 +17,7 @@ const formSchema = zod.object({
 type TFormSchema = zod.infer<typeof formSchema>;
 
 export function Home() {
+    const navigator = useNavigate();
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -25,7 +26,9 @@ export function Home() {
     })
 
     async function onFormSubmit(params: TFormSchema) {
-
+        if (params.search != "") {
+            navigator(`/app/pesquisa?p=${params.search}`);
+        }
     }
 
     function onErase() {
