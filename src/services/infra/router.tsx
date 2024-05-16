@@ -4,6 +4,7 @@ import { AppPage } from "../../pages/App";
 import { Home } from "../../pages/App/Home";
 import { ModuleList } from "../../pages/App/ModuleList";
 import { SearchPage } from "../../pages/App/SearchPage";
+import { ConfigPage } from "../../pages/App/Config";
 
 const router = createBrowserRouter([
     {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
                     {
                         path: "pesquisa",
                         element: <SearchPage />
+                    },
+                    {
+                        path: "config",
+                        element: <ConfigPage />
                     }
                 ]
             }
