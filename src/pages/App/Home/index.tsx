@@ -8,6 +8,7 @@ import { Divisor } from "../../../components/Divisor";
 import { Link, useNavigate } from "react-router-dom";
 
 import ImgBgModuleTest from '../../../assets/imgs/module_test.jpg';
+import { Tutorial } from "../../../components/Tutorial";
 
 const formSchema = zod.object({
     search: zod.string(),
@@ -37,8 +38,21 @@ export function Home() {
         })
     }
 
+    function returnTutorial() {
+        const firstTime = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL__TUTORIAL");
+
+        if (!firstTime) {
+            return (
+                <Tutorial />
+            )
+        }
+
+        return null;
+    }
+
     return (
         <div className={styles.main}>
+            {returnTutorial()}
             <Header showBackButton={false} />
             <section className={styles.search_section}>
                 <form onSubmit={handleSubmit(onFormSubmit)}>

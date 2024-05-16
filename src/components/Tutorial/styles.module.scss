@@ -1,0 +1,143 @@
+.modal {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 4;
+    background: rgba($color: #000000, $alpha: 0.8);
+
+    .modal_container {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 100%;
+        max-height: 900px;
+        background-color: var(--color-gray-700);
+        position: relative;
+        max-width: 425px;
+        margin: 0 auto;
+        z-index: 5;
+
+        .page_1_effect_1 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            z-index: 9;
+        }
+
+        .page_1_effect_2 {
+            position: absolute;
+            right: -40px;
+            top: -40px;
+        }
+
+        .bg_page_1 {
+            width: 100%;
+            margin-top: 165px;
+            margin-bottom: 54px;
+
+            @media (max-height: 740px) {
+                margin-top: 100px;
+            }
+
+            @media (max-height: 670px) {
+                margin-top: 64px;
+            }
+        }
+
+        .bg_page_2 {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+        }
+
+        .bg_page_3 {
+            width: 100%;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+
+
+        }
+
+        .bg_gradiente {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background: linear-gradient(180deg, rgba(102, 102, 102, 0) 1.38%, #000000 100%);
+        }
+
+        .label {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            line-height: 28.8px;
+            font-size: 1.25rem;
+            font-weight: 400;
+            color: var(--color-white);
+        }
+
+        .label_page_2 {
+            padding-top: 575px;
+
+            @media (max-height: 670px) {
+                padding-top: 430px;
+            }
+        }
+
+        .page_count_container {
+            margin-top: 17px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            z-index: 10;
+
+            .dot {
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                background-color: var(--color-gray-300);
+                opacity: 0.2;
+                z-index: 10;
+            }
+
+            .dot_filled {
+                width: 15px;
+                height: 15px;
+                border-radius: 50%;
+                background-color: var(--color-gray-300);
+                z-index: 10;
+            }
+        }
+
+        .button_container {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 34px;
+            margin-top: 45px;
+            margin-bottom: 20px;
+            z-index: 10;
+
+
+            .transparent_button {
+                width: 126px;
+                height: 50px;
+                background-color: transparent;
+                border: none;
+                color: var(--color-white);
+                font-size: 1rem;
+                font-weight: 700;
+                z-index: 10;
+            }
+
+            button {
+                z-index: 10;
+            }
+        }
+    }
+}
