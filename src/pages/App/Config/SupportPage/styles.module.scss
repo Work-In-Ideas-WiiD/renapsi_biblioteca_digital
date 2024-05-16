@@ -1,0 +1,41 @@
+.main {
+    min-height: 100vh;
+    height: 100%;
+    background-color: var(--color-gray-700);
+    padding-left: 21px;
+    padding-right: 21px;
+    max-width: 1093px;
+    margin: 0 auto;
+
+    .label {
+        width: 100%;
+        text-align: center;
+        margin-top: 46px;
+        line-height: 28.8px;
+        font-size: 1.5rem;
+        font-weight: 400;
+        color: var(--color-white);
+        margin-bottom: 46px;
+    }
+
+    .submit_btn_container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 34px;
+        margin-bottom: 54px;
+    }
+
+    .icons_container {
+        margin-top: 48px;
+        padding-bottom: 48px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+}
+
+.mb_20 {
+    margin-bottom: 20px;
+}

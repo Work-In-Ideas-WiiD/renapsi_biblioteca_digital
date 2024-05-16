@@ -2,27 +2,19 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import styles from "./styles.module.scss";
 import { ErrorMessage } from "@hookform/error-message";
 
-const styleClasses = {
-    form: styles.form_input,
-    login: styles.login_input
-}
 
-export interface InputText extends React.InputHTMLAttributes<HTMLInputElement> {
-    type?: string,
+export interface InputText extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     fieldName: string,
     containerClass?: string,
     control: Control<any>,
     errors: FieldErrors,
-    variant?: "login" | "form"
 }
 
-export function InputText({
-    type = "text",
+export function InputTextArea({
     containerClass = "",
     fieldName,
     control,
     errors,
-    variant = "form",
     ...rest
 }: InputText) {
 
@@ -33,11 +25,9 @@ export function InputText({
             render={({ field }) => {
                 return (
                     <div className={`${styles.input_wrapper} ${containerClass}`}>
-                        <input
-                            className={styleClasses[variant]}
+                        <textarea
                             onChange={field.onChange}
                             value={field.value}
-                            type={type}
                             {...rest}
                         />
                         <ErrorMessage
@@ -48,10 +38,12 @@ export function InputText({
                                     <span className={styles.error_msg}>{message}</span>
                                 )
                             }}
+
                         />
                     </div>
                 )
             }}
         />
+
     )
 }

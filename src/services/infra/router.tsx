@@ -5,6 +5,7 @@ import { Home } from "../../pages/App/Home";
 import { ModuleList } from "../../pages/App/ModuleList";
 import { SearchPage } from "../../pages/App/SearchPage";
 import { ConfigPage } from "../../pages/App/Config";
+import { SupportPage } from "../../pages/App/Config/SupportPage";
 
 const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
                     {
                         path: "config",
                         element: <ConfigPage />
+                    },
+                    {
+                        path: "config/suporte",
+                        element: <SupportPage />
                     }
                 ]
             }

@@ -35,6 +35,7 @@ export function Login() {
                 <img className={styles.logo} src={Logo} alt="Biblioteca Digital" />
                 <form action="post" onSubmit={() => { }}>
                     <InputText
+                        variant="login"
                         containerClass={styles.mb_40}
                         fieldName="username"
                         control={control}
@@ -43,6 +44,7 @@ export function Login() {
                     >
                     </InputText>
                     <InputText
+                        variant="login"
                         containerClass={styles.mb_26}
                         type="password"
                         fieldName="password"
