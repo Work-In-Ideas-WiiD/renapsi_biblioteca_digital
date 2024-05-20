@@ -34,5 +34,9 @@
         &:active {
             background-color: var(--color-gray-400);
         }
+
+        @media (min-width: 1093px) {
+            background-color: transparent;
+        }
     }
 }

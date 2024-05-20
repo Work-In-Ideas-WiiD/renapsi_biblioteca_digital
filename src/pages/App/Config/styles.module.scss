@@ -10,6 +10,7 @@
         width: 100%;
         margin-top: 48px;
         margin-bottom: 48px;
+        margin-inline: auto;
 
         li {
             list-style-type: none;
@@ -40,5 +41,57 @@
             border-top: 1px solid var(--color-white);
         }
 
+    }
+}
+
+@media (min-width: 600px) {
+    .main {
+        ul {
+            max-width: 588px;
+            background-color: var(--color-white);
+            border-radius: 16px;
+            position: relative;
+
+            li {
+                padding-left: 56px;
+                padding-top: 34px;
+                padding-bottom: 34px;
+                margin-left: 17px;
+                margin-right: 17px;
+
+                .link {
+
+                    .icon_wraper {
+                        img {
+                            filter: invert(80%) sepia(0%) saturate(607%) hue-rotate(56deg) brightness(94%) contrast(90%);
+                        }
+
+                        .help_icon {
+                            scale: 125%;
+                        }
+                    }
+
+                    span {
+                        color: var(--color-gray-700);
+                    }
+                }
+            }
+
+            li+li {
+                &::before {
+                    content: ' ';
+                    top: 50%;
+                    opacity: 0.5;
+                    width: 95%;
+                    transform: translateX(50%);
+                    position: absolute;
+                    height: 1px;
+                    background-color: var(--color-gray-700);
+                    right: 50%;
+                    margin: 0 auto;
+                }
+
+            }
+        }
     }
 }

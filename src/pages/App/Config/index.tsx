@@ -13,7 +13,7 @@ export function ConfigPage() {
                 <li>
                     <Link to={"/app/config/suporte"} className={styles.link}>
                         <div className={styles.icon_wraper}>
-                            <img src={SupportIcon} alt="ajuda" />
+                            <img className={styles.help_icon} src={SupportIcon} alt="ajuda" />
                         </div>
                         <span>Suporte</span>
                     </Link>
