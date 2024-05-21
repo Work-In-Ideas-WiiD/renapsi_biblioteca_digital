@@ -7,6 +7,21 @@
         width: 100%;
         height: 100%;
 
+        .bg_desktop {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-position: center;
+            aspect-ratio: 16/9;
+            background-repeat: no-repeat;
+            background-image: url('../../assets/imgs/bg_login_desktop.jpg');
+
+            @media (min-width: 1700px) {
+                background-size: cover;
+            }
+        }
+
         .bg_img {
             position: absolute;
             z-index: 0;
@@ -31,6 +46,21 @@
             min-height: 100vh;
             background-color: var(--color-black);
             opacity: 0.5;
+        }
+
+        @media (min-width: 740px) {
+
+            .bg_desktop {
+                display: block;
+            }
+
+            .bg_blur {
+                display: none;
+            }
+
+            .bg_img {
+                display: none;
+            }
         }
     }
 

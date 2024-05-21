@@ -1,6 +1,7 @@
 import styles from "./styles.module.scss";
 import RenapsiFooterImg from "../../assets/imgs/renapsi-footer-login.png";
 import BackgroungImg from "../../assets/imgs/login-bg-img.jpg";
+import BackgroungDesktopImg from "../../assets/imgs/bg_login_desktop.jpg";
 import Logo from "../../assets/svgs/login_logo.svg";
 import { InputText } from "../../components/form/InputText";
 import { useForm } from "react-hook-form";
@@ -28,7 +29,9 @@ export function Login() {
     return (
         <main className={styles.main}>
             <div className={styles.bg}>
-                <img className={styles.bg_img} src={BackgroungImg} alt="Biblioteca Digital" />
+                <img className={styles.bg_img} src={BackgroungImg} alt="" />
+                <div className={styles.bg_desktop}></div>
+                {/* <img className={styles.bg_desktop} src={BackgroungDesktopImg} alt="" /> */}
                 <div className={styles.bg_blur}></div>
             </div>
             <div className={styles.login_wrapper}>
