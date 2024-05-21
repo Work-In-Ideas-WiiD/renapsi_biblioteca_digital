@@ -5,20 +5,70 @@
     top: 0;
     left: 0;
     z-index: 4;
-    background: rgba($color: #000000, $alpha: 0.8);
 
     .modal_container {
         position: relative;
-        top: 50%;
-        transform: translateY(-50%);
         width: 100%;
         height: 100%;
-        max-height: 900px;
         background-color: var(--color-gray-700);
-        position: relative;
-        max-width: 425px;
-        margin: 0 auto;
         z-index: 5;
+
+        .bg_desktop_3 {
+            background-image: url('../../assets/imgs/bg_desktop_tutorial_3.jpg');
+        }
+
+        .bg_desktop_2 {
+            background-image: url('../../assets/imgs/bg_desktop_tutorial_2.jpg');
+        }
+
+        .bg_desktop_1 {
+            background-image: url('../../assets/imgs/bg_desktop_tutorial_1.jpg');
+        }
+
+        .bg_desktop {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            background-position: center;
+            aspect-ratio: 16/9;
+            background-repeat: no-repeat;
+
+            @media (min-width: 1700px) {
+                background-size: cover;
+            }
+        }
+
+        .logo_desktop {
+            display: none;
+            padding-top: 144px;
+            position: relative;
+            z-index: 99999;
+            margin-inline: auto;
+        }
+
+        @media (min-width: 640px) {
+
+            .logo_desktop {
+                display: flex;
+            }
+
+            .bg_page_1 {
+                display: none;
+            }
+
+            .bg_page_2 {
+                display: none;
+            }
+
+            .bg_page_3 {
+                display: none;
+            }
+
+            .bg_desktop {
+                display: block;
+            }
+        }
 
         .page_1_effect_1 {
             position: absolute;
@@ -34,6 +84,7 @@
         }
 
         .bg_page_1 {
+            position: absolute;
             width: 100%;
             margin-top: 165px;
             margin-bottom: 54px;
@@ -47,6 +98,7 @@
             }
         }
 
+
         .bg_page_2 {
             width: 100%;
             height: 100%;
@@ -59,8 +111,6 @@
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-
-
         }
 
         .bg_gradiente {
@@ -78,14 +128,20 @@
             font-size: 1.25rem;
             font-weight: 400;
             color: var(--color-white);
+
         }
 
         .label_page_2 {
             padding-top: 575px;
 
-            @media (max-height: 670px) {
+            @media (max-height: 740px) {
                 padding-top: 430px;
             }
+
+            // @media (min-width: 670px) {
+            //     padding-top: 475px;
+            // }
+
         }
 
         .page_count_container {
@@ -115,6 +171,8 @@
         }
 
         .button_container {
+            max-width: 622px;
+            margin-inline: auto;
             width: 100%;
             display: flex;
             justify-content: space-between;

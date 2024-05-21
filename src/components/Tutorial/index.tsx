@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styles from './styles.module.scss';
 import { CustomButton } from '../form/Button';
+import Logo from "../../assets/imgs/logo_tutorial_desktop.png";
 //page 1
 import ImgBgPage1 from "../../assets/imgs/tutorial_bg_1.jpg";
 import Page1Effect1 from "../../assets/svgs/tutorial_1_effect_1.svg"
@@ -26,10 +27,12 @@ export function Tutorial() {
         return (
             <div className={styles.modal}>
                 <div className={styles.modal_container}>
+                    <div className={`${styles.bg_desktop} ${styles.bg_desktop_1}`}></div>
+                    <img className={styles.logo_desktop} src={Logo} alt="Biblioteca Digital" />
                     <img className={styles.page_1_effect_1} src={Page1Effect1} alt="" />
                     <img className={styles.page_1_effect_2} src={Page1Effect2} alt="" />
                     <img className={styles.bg_page_1} src={ImgBgPage1} alt="" />
-                    <p className={styles.label}>Acesse a <strong>Biblioteca Digital</strong><br />a qualquer hora, de qualquer lugar</p>
+                    <p className={`${styles.label} ${styles.label_page_2}`}>Acesse a <strong>Biblioteca Digital</strong><br />a qualquer hora, de qualquer lugar</p>
                     <div className={styles.page_count_container}>
                         <div className={styles.dot_filled}></div>
                         <div className={styles.dot}></div>
@@ -48,6 +51,8 @@ export function Tutorial() {
         return (
             <div className={styles.modal}>
                 <div className={styles.modal_container}>
+                    <div className={`${styles.bg_desktop} ${styles.bg_desktop_2}`}></div>
+                    <img className={styles.logo_desktop} src={Logo} alt="Biblioteca Digital" />
                     <img className={styles.page_1_effect_1} src={Page2Effect1} alt="" />
                     <img className={styles.bg_page_2} src={ImgBgPage2} alt="" />
                     <div className={styles.bg_gradiente}></div>
@@ -70,6 +75,8 @@ export function Tutorial() {
         return (
             <div className={styles.modal}>
                 <div className={styles.modal_container}>
+                    <div className={`${styles.bg_desktop} ${styles.bg_desktop_3}`}></div>
+                    <img className={styles.logo_desktop} src={Logo} alt="Biblioteca Digital" />
                     <img className={styles.bg_page_3} src={ImgBgPage3} alt="" />
                     <div className={styles.bg_gradiente}></div>
                     <div className={`${styles.label} ${styles.label_page_2}`}>Pesquise pelos <strong>títulos</strong> dos livros <br />ou pelos <strong>módulos</strong> das disciplinas</div>
