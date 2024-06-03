@@ -7,23 +7,44 @@ import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButton } from "../../components/form/Button";
+import { postLogin, postLoginMoodle } from "../../services/http/auth";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
 
 const formSchema = zod.object({
-    username: zod.string(),
-    password: zod.string(),
+    username: zod.string({
+        required_error: "Campo obrigatório"
+    }),
+    password: zod.string({
+        required_error: "Campo obrigatório"
+    }),
 });
 
 type TFormSchema = zod.infer<typeof formSchema>;
 
 export function Login() {
-
+    const [loading, setLoading] = useState(false);
+    const { signIn } = useAuth();
     const { handleSubmit, control, formState: { errors } } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: '',
-            password: '',
+            username: undefined,
+            password: undefined,
         }
     })
+
+    async function handleLogin(login_props: TFormSchema) {
+        if (loading) return;
+        try {
+            setLoading(true);
+            await signIn(login_props.username, login_props.password);
+            setLoading(false);
+        } catch (error) {
+            setLoading(false);
+            toast.error("Nome de usuário ou senha inválido.")
+        }
+    }
 
     return (
         <main className={styles.main}>
@@ -34,7 +55,7 @@ export function Login() {
             </div>
             <div className={styles.login_wrapper}>
                 <img className={styles.logo} src={Logo} alt="Biblioteca Digital" />
-                <form action="post" onSubmit={() => { }}>
+                <form action="post" onSubmit={handleSubmit(handleLogin)}>
                     <InputText
                         variant="login"
                         containerClass={styles.mb_40}
@@ -56,7 +77,7 @@ export function Login() {
                     </InputText>
                     <a href="#" className={styles.forgot_password}>Esqueci a minha senha.</a>
                     <div className="center_button">
-                        <CustomButton type="submit" title="Entrar"></CustomButton>
+                        <CustomButton type="submit" title="Entrar" loading={loading}></CustomButton>
                     </div>
                 </form>
             </div>

@@ -5,11 +5,11 @@ import styles from './styles.module.scss';
 interface ICustomButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     title: string;
     variation?: "blue" | "transparent";
+    loading: boolean
 }
 
 
-export function CustomButton({ title, variation = "blue", ...rest }: ICustomButtonProps) {
-    // const { fetching } = useAuth();
+export function CustomButton({ title, variation = "blue", loading = false, ...rest }: ICustomButtonProps) {
 
     function getStyleClass(variation: string) {
         switch (variation) {
@@ -26,7 +26,7 @@ export function CustomButton({ title, variation = "blue", ...rest }: ICustomButt
         if (loading) {
             return (
                 <RotatingLines
-                    strokeColor="grey"
+                    strokeColor="#fff"
                     strokeWidth="5"
                     animationDuration="1.00"
                     width="24"
@@ -42,7 +42,7 @@ export function CustomButton({ title, variation = "blue", ...rest }: ICustomButt
             className={`${getStyleClass(variation)} ${styles.button}`}
             {...rest}
         >
-            {_renderContent(title, false)}
+            {_renderContent(title, loading)}
         </button>
     )
 }

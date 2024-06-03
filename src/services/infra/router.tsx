@@ -6,10 +6,11 @@ import { ModuleList } from "../../pages/App/ModuleList";
 import { SearchPage } from "../../pages/App/SearchPage";
 import { ConfigPage } from "../../pages/App/Config";
 import { SupportPage } from "../../pages/App/Config/SupportPage";
+import { ContextRoute } from "../../pages/ContextRoute";
 
 const router = createBrowserRouter([
     {
-        //  element: <ContextRoute />,
+        element: <ContextRoute />,
         children: [
             {
                 path: "/",

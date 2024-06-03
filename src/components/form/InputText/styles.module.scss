@@ -1,6 +1,15 @@
 @import '../../../styles/Global.scss';
 
 .input_wrapper {
+    position: relative;
+
+    .error_msg {
+        color: var(--color-red-400);
+        position: absolute;
+        left: 0;
+        bottom: -19px;
+    }
+
     .login_input {
         width: 100%;
         color: var(--color-white);
