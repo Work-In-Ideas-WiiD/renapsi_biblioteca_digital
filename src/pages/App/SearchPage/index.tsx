@@ -32,6 +32,7 @@ export function SearchPage() {
     }, [])
 
     async function onFormSubmit(params: TFormSchema) {
+        console.log(params);
 
     }
 

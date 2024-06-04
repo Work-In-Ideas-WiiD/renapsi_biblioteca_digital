@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CustomButton } from "../../components/form/Button";
-import { postLogin, postLoginMoodle } from "../../services/http/auth";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth";

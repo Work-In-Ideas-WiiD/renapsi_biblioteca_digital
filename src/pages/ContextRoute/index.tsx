@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { AuthContext, AuthContextData } from "../../hooks/useAuth";
+import { AuthContextData } from "../../contexts/AuthContext";
 
 export function ContextRoute() {
     return (

@@ -9,6 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 
 import ImgBgModuleTest from '../../../assets/imgs/module_test.jpg';
 import { Tutorial } from "../../../components/Tutorial";
+import { useEffect, useState } from "react";
+import { Book } from "../../../services/http/conteudos/livros/types";
+import { toast } from "react-toastify";
+import { Module } from "../../../services/http/conteudos/module/types";
+import { getModules } from "../../../services/http/conteudos/module";
 
 const formSchema = zod.object({
     search: zod.string(),
@@ -19,12 +24,27 @@ type TFormSchema = zod.infer<typeof formSchema>;
 
 export function Home() {
     const navigator = useNavigate();
+    const [modules, setModules] = useState<Module[]>([]);
+    const [page, setPage] = useState(1);
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             search: '',
         }
     })
+
+    useEffect(() => {
+        fetchModules();
+    }, [])
+
+    async function fetchModules() {
+        try {
+            const { data } = await getModules();
+            setModules(data.data);
+        } catch (error) {
+            toast.error("Houve um erro ao carregar os modulos");
+        }
+    }
 
     async function onFormSubmit(params: TFormSchema) {
         if (params.search != "") {
@@ -45,6 +65,21 @@ export function Home() {
             return (
                 <Tutorial />
             )
+        }
+
+        return null;
+    }
+
+    function renderModuleList(_modules: Module[]) {
+        if (_modules && _modules.length > 0) {
+
+            return _modules.map((module) => (
+                <Link className={styles.module_card} to={`/app/modulo/${module.id}`}>
+                    <article>
+                        <img src={module.icone} alt={module.nome} />
+                    </article>
+                </Link>
+            ))
         }
 
         return null;
@@ -71,21 +106,9 @@ export function Home() {
             <section className={styles.modules_wraper}>
                 <label className={styles.label_title}>Procure por <strong>módulo</strong></label>
                 <div className={styles.module_list}>
-                    <Link className={styles.module_card} to={"/app/modulo/1"}>
-                        <article >
-                            <img src={ImgBgModuleTest} alt="" />
-                        </article>
-                    </Link>
-                    <Link className={styles.module_card} to={"/app/modulo/1"}>
-                        <article >
-                            <img src={ImgBgModuleTest} alt="" />
-                        </article>
-                    </Link>
-                    <Link className={styles.module_card} to={"/app/modulo/1"}>
-                        <article >
-                            <img src={ImgBgModuleTest} alt="" />
-                        </article>
-                    </Link>
+                    {
+                        renderModuleList(modules)
+                    }
                 </div>
 
             </section>

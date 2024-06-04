@@ -40,7 +40,7 @@ export function Tutorial() {
                     </div>
                     <div className={styles.button_container}>
                         <button onClick={() => { finishTutorial() }} className={styles.transparent_button}>Pular</button>
-                        <CustomButton onClick={() => { setPage(2) }} title='Próximo' />
+                        <CustomButton onClick={() => { setPage(2) }} title='Próximo' loading={false} />
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@ export function Tutorial() {
                     </div>
                     <div className={styles.button_container}>
                         <button onClick={() => { finishTutorial() }} className={styles.transparent_button}>Pular</button>
-                        <CustomButton onClick={() => { setPage(3) }} title='Próximo' />
+                        <CustomButton onClick={() => { setPage(3) }} title='Próximo' loading={false} />
                     </div>
                 </div>
             </div>
@@ -87,7 +87,7 @@ export function Tutorial() {
                     </div>
                     <div className={styles.button_container}>
                         <button onClick={() => { finishTutorial() }} className={styles.transparent_button}>Pular</button>
-                        <CustomButton onClick={() => { finishTutorial() }} title='Próximo' />
+                        <CustomButton onClick={() => { finishTutorial() }} title='Próximo' loading={false} />
                     </div>
                 </div>
             </div>

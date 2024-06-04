@@ -30,6 +30,7 @@ export function SupportPage() {
     })
 
     async function onFormSubmit(params: TFormSchema) {
+        console.log(params);
 
     }
     return (
@@ -40,7 +41,7 @@ export function SupportPage() {
                 <InputText containerClass={styles.mb_20} fieldName="email" errors={errors} control={control} placeholder="E-mail" type="email" />
                 <InputTextArea rows={8} fieldName="message" errors={errors} control={control} placeholder="Mensagem" />
                 <div className={styles.submit_btn_container} >
-                    <CustomButton title="Enviar" type="submit" />
+                    <CustomButton title="Enviar" type="submit" loading={false} />
                 </div>
             </form>
             <Divisor />

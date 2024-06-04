@@ -4,7 +4,6 @@ export interface GetLoginRes {
     expires_in: number
 }
 
-
 export interface UserData {
     id: string,
     email: string,
