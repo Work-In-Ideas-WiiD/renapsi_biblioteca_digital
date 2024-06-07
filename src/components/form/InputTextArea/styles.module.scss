@@ -1,7 +1,12 @@
 @import '../../../styles/Global.scss';
 
 .input_wrapper {
-
+    .error_msg {
+        color: var(--color-red-400);
+        position: absolute;
+        left: 0;
+        bottom: -19px;
+    }
 
     textarea {
         width: 100%;

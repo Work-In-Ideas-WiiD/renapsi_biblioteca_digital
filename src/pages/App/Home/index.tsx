@@ -7,10 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Divisor } from "../../../components/Divisor";
 import { Link, useNavigate } from "react-router-dom";
 
-import ImgBgModuleTest from '../../../assets/imgs/module_test.jpg';
 import { Tutorial } from "../../../components/Tutorial";
 import { useEffect, useState } from "react";
-import { Book } from "../../../services/http/conteudos/livros/types";
 import { toast } from "react-toastify";
 import { Module } from "../../../services/http/conteudos/module/types";
 import { getModules } from "../../../services/http/conteudos/module";
@@ -25,7 +23,6 @@ type TFormSchema = zod.infer<typeof formSchema>;
 export function Home() {
     const navigator = useNavigate();
     const [modules, setModules] = useState<Module[]>([]);
-    const [page, setPage] = useState(1);
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -99,6 +96,7 @@ export function Home() {
                         control={control}
                         onErase={onErase}
                         placeholder="Pesquise pelo título ou palavra chave"
+                        fetching={false}
                     />
                 </form>
             </section>

@@ -10,9 +10,14 @@ import { Divisor } from "../../../../components/Divisor";
 import InstagramIcon from "../../../../assets/svgs/icon_instagram.svg"
 import WebsiteIcon from "../../../../assets/svgs/icon_www.svg"
 import LinkedinIcon from "../../../../assets/svgs/icon_linkedin.svg"
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { postSuporte } from "../../../../services/http/users/suporte";
 
 const formSchema = zod.object({
-    email: zod.string().email({ message: "E-mail inválido" }),
+    email: zod.string({
+        required_error: "Campo obrigatório"
+    }).email({ message: "E-mail inválido" }),
     message: zod.string(),
 
 });
@@ -21,18 +26,36 @@ type TFormSchema = zod.infer<typeof formSchema>;
 
 
 export function SupportPage() {
-    const { handleSubmit, control, formState: { errors } } = useForm<TFormSchema>({
+    const [loading, setLoading] = useState(false);
+    const { handleSubmit, control, formState: { errors }, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            email: '',
-            message: ''
+            email: undefined,
+            message: undefined
         }
     })
 
     async function onFormSubmit(params: TFormSchema) {
-        console.log(params);
-
+        if (loading) return
+        try {
+            setLoading(true);
+            await postSuporte(params.email, params.message);
+            toast.success("Mensagem enviada ao suporte!");
+            resetForm();
+        } catch (error) {
+            toast.error("Erro ao enviar mensagem de suporte");
+        } finally {
+            setLoading(false);
+        }
     }
+
+    function resetForm() {
+        reset({
+            email: "",
+            message: ""
+        })
+    }
+
     return (
         <div className={styles.main}>
             <Header alternativeLogo showMenuButton={false} showBackButton={true} backButtonRoute="/app/config" />
@@ -41,7 +64,7 @@ export function SupportPage() {
                 <InputText containerClass={styles.mb_20} fieldName="email" errors={errors} control={control} placeholder="E-mail" type="email" />
                 <InputTextArea rows={8} fieldName="message" errors={errors} control={control} placeholder="Mensagem" />
                 <div className={styles.submit_btn_container} >
-                    <CustomButton title="Enviar" type="submit" loading={false} />
+                    <CustomButton title="Enviar" type="submit" loading={loading} />
                 </div>
             </form>
             <Divisor />

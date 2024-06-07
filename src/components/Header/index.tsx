@@ -41,12 +41,12 @@ export function Header({
             </div>
             {
                 !alternativeLogo && (
-                    <img src={LogoImg} alt="Logotipo biblioteca digital" />
+                    <img className={styles.logo_1} src={LogoImg} alt="Biblioteca digital" />
                 )
             }
             {
                 alternativeLogo && (
-                    <img src={LogoAltImg} alt="Logotipo Demà jovem by renapsi" />
+                    <img src={LogoAltImg} alt="Demà jovem by renapsi" />
                 )
             }
             <div className={styles.button_container}>
