@@ -2,8 +2,12 @@ import { AxiosResponse } from "axios";
 import { api } from "../../api";
 import { Book, GetBooksRes } from "./types";
 
-export async function getBooks(): Promise<AxiosResponse<GetBooksRes, any>> {
-    const res = await api.get("/conteudos/livro");
+export async function getBooks(search?: string): Promise<AxiosResponse<GetBooksRes, any>> {
+    const res = await api.get("/conteudos/livro", {
+        params: {
+            "filter[search]": search
+        }
+    });
 
     return res;
 }

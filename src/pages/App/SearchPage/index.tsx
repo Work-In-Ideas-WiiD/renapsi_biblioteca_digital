@@ -6,21 +6,22 @@ import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divisor } from "../../../components/Divisor";
 import { FileCard } from "../../../components/FileCard";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { Module } from "../../../services/http/conteudos/module/types";
+import { getBooks } from "../../../services/http/conteudos/livros";
+import { Book } from "../../../services/http/conteudos/livros/types";
+import { toast } from "react-toastify";
 
 const formSchema = zod.object({
     search: zod.string(),
-
 });
 
 type TFormSchema = zod.infer<typeof formSchema>;
 
 export function SearchPage() {
-    const params = useParams();
-
-
+    let [searchParams, setSearchParams] = useSearchParams();
+    const [loading, setLoading] = useState(false);
+    const [booksList, setBooksList] = useState<Book[]>([]);
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -28,17 +29,69 @@ export function SearchPage() {
         }
     })
 
-
+    useEffect(() => {
+        searchBooks();
+    }, [])
 
     async function onFormSubmit(params: TFormSchema) {
-        console.log(params);
+        if (loading) return;
+        try {
+            setLoading(true);
+            setSearchParams(`p=${params.search}`, {
+                replace: true,
+            });
+            const res = await fetchBooks(params.search);
+            setBooksList(res.data);
+        } catch (error) {
+            toast.error("Não foi possivel obter a lista de livros");
+        } finally {
+            setLoading(false);
+        }
+    }
 
+    async function searchBooks() {
+        const param = getParams();
+        if (!param) {
+            return
+        }
+        try {
+            setLoading(true);
+            const res = await fetchBooks(param);
+            setBooksList(res.data);
+        } catch (error) {
+            toast.error("Não foi possivel obter a lista de livros");
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    function getParams() {
+        const param = searchParams.get("p");
+        if (param) return param;
+        return false;
+    }
+
+    async function fetchBooks(search: string) {
+        const { data } = await getBooks(search);
+        return data;
     }
 
     function onErase() {
         reset({
-            search: ""
+            search: "",
         })
+    }
+
+    function renderBooksList(_bookList: Book[]) {
+        if (!_bookList || booksList.length == 0) {
+            return null;
+        }
+
+        return _bookList.map((item) => {
+            return (
+                <FileCard id={item.id} name={item.titulo} key={item.id} />
+            )
+        });
     }
 
     return (
@@ -47,6 +100,7 @@ export function SearchPage() {
             <section className={styles.search_section}>
                 <form onSubmit={handleSubmit(onFormSubmit)}>
                     <InputSeach
+                        fetching={loading}
                         id="search"
                         fieldName="search"
                         control={control}
@@ -58,8 +112,9 @@ export function SearchPage() {
             <Divisor />
             <section className={styles.files_wraper}>
                 <div className={styles.files_list}>
-                    {/* <FileCard />
-                 */}
+                    {
+                        renderBooksList(booksList)
+                    }
                 </div>
             </section>
         </div>
