@@ -1,0 +1,28 @@
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .icon_wrapper {
+        width: 66px;
+        height: 66px;
+        background-color: var(--color-white);
+        border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 20px;
+
+        img {
+            scale: 150%;
+        }
+    }
+
+    p {
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: var(--color-white);
+    }
+}

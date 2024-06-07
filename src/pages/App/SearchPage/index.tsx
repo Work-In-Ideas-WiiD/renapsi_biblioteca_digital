@@ -11,6 +11,8 @@ import { useEffect, useState } from "react";
 import { getBooks } from "../../../services/http/conteudos/livros";
 import { Book } from "../../../services/http/conteudos/livros/types";
 import { toast } from "react-toastify";
+import { Paginator } from "../../../components/Paginator";
+import { NoContentMessage } from "../../../components/NoContent";
 
 const formSchema = zod.object({
     search: zod.string(),
@@ -22,6 +24,9 @@ export function SearchPage() {
     let [searchParams, setSearchParams] = useSearchParams();
     const [loading, setLoading] = useState(false);
     const [booksList, setBooksList] = useState<Book[]>([]);
+    const [pages, setPages] = useState(0);
+    const [page, setPage] = useState(1);
+    const [noContent, setNoContent] = useState(false);
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -30,34 +35,32 @@ export function SearchPage() {
     })
 
     useEffect(() => {
-        searchBooks();
-    }, [])
+        searchBooksWIthParam();
+    }, []);
 
-    async function onFormSubmit(params: TFormSchema) {
-        if (loading) return;
-        try {
-            setLoading(true);
-            setSearchParams(`p=${params.search}`, {
-                replace: true,
-            });
-            const res = await fetchBooks(params.search);
-            setBooksList(res.data);
-        } catch (error) {
-            toast.error("Não foi possivel obter a lista de livros");
-        } finally {
-            setLoading(false);
+    async function searchBooksWIthParam() {
+        const param = getParams();
+        if (param) {
+            searchBooks(page, param);
         }
     }
 
-    async function searchBooks() {
-        const param = getParams();
-        if (!param) {
-            return
-        }
+    async function onFormSubmit(params: TFormSchema) {
+        if (loading) return;
+        setSearchParams(`p=${params.search}`, {
+            replace: true,
+        });
+        await searchBooks(page, params.search);
+    }
+
+    async function searchBooks(_page: number, title: string) {
+
         try {
             setLoading(true);
-            const res = await fetchBooks(param);
+            const res = await fetchBooks(title, _page);
             setBooksList(res.data);
+            setPages(res.meta.last_page);
+            setNoContent(res.data.length == 0);
         } catch (error) {
             toast.error("Não foi possivel obter a lista de livros");
         } finally {
@@ -71,8 +74,8 @@ export function SearchPage() {
         return false;
     }
 
-    async function fetchBooks(search: string) {
-        const { data } = await getBooks(search);
+    async function fetchBooks(search: string, pageParam: number,) {
+        const { data } = await getBooks(pageParam, search);
         return data;
     }
 
@@ -92,6 +95,11 @@ export function SearchPage() {
                 <FileCard id={item.id} name={item.titulo} key={item.id} />
             )
         });
+    }
+
+    function onChangePage(page: number) {
+        setPage(page);
+
     }
 
     return (
@@ -115,7 +123,14 @@ export function SearchPage() {
                     {
                         renderBooksList(booksList)
                     }
+                    {
+                        noContent && (
+                            <NoContentMessage />
+                        )
+                    }
+
                 </div>
+                <Paginator onPageChange={onChangePage} pageCount={pages} />
             </section>
         </div>
     )

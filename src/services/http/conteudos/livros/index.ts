@@ -2,10 +2,11 @@ import { AxiosResponse } from "axios";
 import { api } from "../../api";
 import { Book, GetBooksRes } from "./types";
 
-export async function getBooks(search?: string): Promise<AxiosResponse<GetBooksRes, any>> {
+export async function getBooks(page: number, search?: string): Promise<AxiosResponse<GetBooksRes, any>> {
     const res = await api.get("/conteudos/livro", {
         params: {
-            "filter[search]": search
+            "filter[search]": search,
+            page: page,
         }
     });
 
