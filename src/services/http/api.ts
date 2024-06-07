@@ -16,11 +16,18 @@ type APIInstanceProps = AxiosInstance & {
 function setAuthToken(token: string) {
     api.defaults.headers.common['Authorization'] = "Bearer" + token;
 }
+function tryToFillTheToken() {
+    const token = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
+    if (token) {
+        setAuthToken(token);
+    }
+}
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
     signal: controller.signal
 }) as APIInstanceProps;
+tryToFillTheToken();
 
 let failedQueue: PromiseType[] = [];
 let isRefreshing = false;

@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../../api";
-import { GetModulesRes, Module } from "./types";
+import { GetModulesByIdRes, GetModulesRes } from "./types";
 
 export async function getModules(): Promise<AxiosResponse<GetModulesRes, any>> {
     const res = await api.get("/conteudos/modulo");
@@ -8,7 +8,7 @@ export async function getModules(): Promise<AxiosResponse<GetModulesRes, any>> {
     return res;
 }
 
-export async function getModulesById(id: string): Promise<AxiosResponse<Module, any>> {
+export async function getModulesById(id: string): Promise<AxiosResponse<GetModulesByIdRes, any>> {
     const res = await api.get(`/conteudos/modulo/${id}`);
 
     return res;

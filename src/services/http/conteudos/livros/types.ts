@@ -9,6 +9,7 @@ export interface Book {
     criado_em: string,
     modulos: Module[],
     tags: Tag[],
+    titulo: string
 }
 
 export interface Tag {

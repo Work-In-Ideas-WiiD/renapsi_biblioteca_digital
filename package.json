@@ -13,7 +13,7 @@
     "@hookform/error-message": "^2.0.1",
     "@hookform/resolvers": "^3.3.4",
     "@types/react-router-dom": "^5.3.3",
-    "axios": "^1.6.8",
+    "axios": "^1.4.0",
     "nookies": "^2.5.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

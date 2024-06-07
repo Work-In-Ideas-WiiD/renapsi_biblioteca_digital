@@ -25,6 +25,15 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
         email: "",
         email_verificado_em: null
     })
+    useEffect(() => {
+        const token = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
+        if (token) {
+            setAuthToken(token);
+        } else {
+            navigate("/");
+        }
+
+    }, []);
 
     useEffect(() => {
         const subscribe = api.registerInterceptTokenManager(removeAuth);
@@ -51,7 +60,7 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
             setAuthToken(login_data.access_token);
             const { data: user } = await getMe();
             setUserData(user);
-            localStorage.setItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN", JSON.stringify(login_data.access_token));
+            localStorage.setItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN", login_data.access_token);
             // setCookie(undefined, "renapsi_biblioteca_digital.token", login_data.access_token, {
             //     maxAge: 60 * 60,
             //     path: '/'

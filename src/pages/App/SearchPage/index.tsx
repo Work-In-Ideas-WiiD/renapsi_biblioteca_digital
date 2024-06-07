@@ -6,8 +6,9 @@ import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Divisor } from "../../../components/Divisor";
 import { FileCard } from "../../../components/FileCard";
-import { useSearchParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useParams, useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Module } from "../../../services/http/conteudos/module/types";
 
 const formSchema = zod.object({
     search: zod.string(),
@@ -17,7 +18,8 @@ const formSchema = zod.object({
 type TFormSchema = zod.infer<typeof formSchema>;
 
 export function SearchPage() {
-    let [searchParams] = useSearchParams();
+    const params = useParams();
+
 
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
@@ -26,10 +28,7 @@ export function SearchPage() {
         }
     })
 
-    useEffect(() => {
-        console.log(searchParams.get("p"));
 
-    }, [])
 
     async function onFormSubmit(params: TFormSchema) {
         console.log(params);
@@ -59,9 +58,8 @@ export function SearchPage() {
             <Divisor />
             <section className={styles.files_wraper}>
                 <div className={styles.files_list}>
-                    <FileCard />
-                    <FileCard />
-                    <FileCard />
+                    {/* <FileCard />
+                 */}
                 </div>
             </section>
         </div>

@@ -1,6 +1,9 @@
 import { Pagination } from "../../types";
 
 export interface GetModulesRes extends Pagination<Module> { }
+export interface GetModulesByIdRes {
+    data: Module
+}
 
 export interface Module {
     id: string,
