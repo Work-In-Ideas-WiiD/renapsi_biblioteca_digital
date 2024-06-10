@@ -33,12 +33,6 @@ export function PdfPage() {
 
         try {
             const { data } = await getBookById(id);
-
-
-            // const blob = await fetchPdfAsBlob(data.data.arquivo);
-            // const blobUrl = URL.createObjectURL(blob);
-            // console.log(blobUrl);
-
             setPdfUrl(data.data.arquivo);
         } catch (error) {
             toast.error("Erro ao carregar pdf")
@@ -97,23 +91,36 @@ export function PdfPage() {
 
         return (
             <>
-                <Document
-                    file={link}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                    options={{ workerSrc: `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js` }}
+                <div className={styles.pdf_container}>
+                    <Document
 
-                >
-                    <Page pageNumber={pageNumber} />
-                </Document>
-                <p>
-                    Page {pageNumber} of {numPages}
-                </p>
+                        className={styles.pdf_file}
+                        file={link}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                    // options={{ workerSrc: `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js` }}
+
+                    >
+                        <Page pageNumber={pageNumber} scale={2} loading={"Carregando pdf"} error={"Erro ao carregar o pdf"} />
+                    </Document>
+
+                    <p>
+                        Page {pageNumber} of {numPages}
+                    </p>
+                </div>
             </>
         )
     }
 
     return (
         <div className={styles.main}>
+            <header className={styles.header}>
+                <div className={styles.header_conteiner}>
+                    <button>{"<"}</button>
+
+                    <button>{"..."}</button>
+                </div>
+
+            </header>
             {renderPdf(pdfUrl)}
         </div>
     )
