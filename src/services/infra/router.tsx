@@ -7,6 +7,7 @@ import { SearchPage } from "../../pages/App/SearchPage";
 import { ConfigPage } from "../../pages/App/Config";
 import { SupportPage } from "../../pages/App/Config/SupportPage";
 import { ContextRoute } from "../../pages/ContextRoute";
+import { PdfPage } from "../../pages/App/PdfPage";
 
 const router = createBrowserRouter([
     {
@@ -43,7 +44,11 @@ const router = createBrowserRouter([
                     {
                         path: "config/suporte",
                         element: <SupportPage />
-                    }
+                    },
+                    {
+                        path: "pdf/:id",
+                        element: <PdfPage />
+                    },
                 ]
             }
         ]

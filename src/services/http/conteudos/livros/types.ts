@@ -25,3 +25,7 @@ export interface Tag {
         updated_at: string
     }
 }
+
+export interface GetBookByIdRes {
+    data: Book;
+}

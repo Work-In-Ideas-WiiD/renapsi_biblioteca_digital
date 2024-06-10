@@ -13,6 +13,7 @@ import LinkedinIcon from "../../../../assets/svgs/icon_linkedin.svg"
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { postSuporte } from "../../../../services/http/users/suporte";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const formSchema = zod.object({
     email: zod.string({
@@ -27,6 +28,7 @@ type TFormSchema = zod.infer<typeof formSchema>;
 
 export function SupportPage() {
     const [loading, setLoading] = useState(false);
+    const [capVal, setCapVal] = useState<string | null>(null);
     const { handleSubmit, control, formState: { errors }, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -63,8 +65,15 @@ export function SupportPage() {
             <form onSubmit={handleSubmit(onFormSubmit)}>
                 <InputText containerClass={styles.mb_20} fieldName="email" errors={errors} control={control} placeholder="E-mail" type="email" />
                 <InputTextArea rows={8} fieldName="message" errors={errors} control={control} placeholder="Mensagem" />
+                <div className={styles.recapcha_container}>
+                    <ReCAPTCHA
+                        sitekey="6LdlV5sUAAAAACePBaldFo2RK3Lsfwzy3R-fPOzD"
+                        onChange={(val) => { setCapVal(val) }}
+                    />
+                </div>
+
                 <div className={styles.submit_btn_container} >
-                    <CustomButton title="Enviar" type="submit" loading={loading} />
+                    <CustomButton disabled={!capVal} title="Enviar" type="submit" loading={loading} />
                 </div>
             </form>
             <Divisor />

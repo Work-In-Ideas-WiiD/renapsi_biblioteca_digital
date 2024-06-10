@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { api } from "../../api";
-import { Book, GetBooksRes } from "./types";
+import { GetBookByIdRes, GetBooksRes } from "./types";
 
 export async function getBooks(page: number, search?: string): Promise<AxiosResponse<GetBooksRes, any>> {
     const res = await api.get("/conteudos/livro", {
@@ -13,7 +13,7 @@ export async function getBooks(page: number, search?: string): Promise<AxiosResp
     return res;
 }
 
-export async function getBookById(id: string): Promise<AxiosResponse<Book, any>> {
+export async function getBookById(id: string): Promise<AxiosResponse<GetBookByIdRes, any>> {
     const res = await api.get(`/conteudos/livro/${id}`);
 
     return res;
