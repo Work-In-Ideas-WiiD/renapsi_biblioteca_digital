@@ -51,8 +51,45 @@ export function PdfPage() {
         }
     }
 
-    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
-        setNumPages(numPages);
+    async function fetchAndPrintPDF(url: string) {
+        try {
+            // Fetch the PDF from the URL
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+            }
+
+            // Get the PDF blob
+            const blob = await response.blob();
+
+            // Create a URL for the blob
+            const blobUrl = URL.createObjectURL(blob);
+
+            // Create an iframe to hold the PDF
+            const iframe = document.createElement('iframe');
+            iframe.style.display = 'none'; // Hide the iframe
+            iframe.src = blobUrl;
+
+            // Add the iframe to the document
+            document.body.appendChild(iframe);
+
+            // Wait for the iframe to load the PDF
+            iframe.onload = () => {
+                // Print the PDF
+                iframe.contentWindow?.print();
+
+                // Clean up
+                setTimeout(() => {
+                    URL.revokeObjectURL(blobUrl);
+
+                }, 1000)
+
+            };
+        } catch (error) {
+            toast.error('Erro ao imprimir o pdf');
+        } finally {
+            setIsMenuOpen(false);
+        }
     }
 
     function handlePage(value: "up" | "down") {
@@ -73,6 +110,84 @@ export function PdfPage() {
         if (currentPage > 1) {
             setCurrentPage(currentPage - 1);
         }
+    }
+
+    function renderMenu(render: boolean) {
+        if (render) {
+            return (
+                <ul className={styles.header_menu}>
+                    <li onClick={handleDownloadPdf}>
+                        <div className={styles.icon_box}>
+                            <img src={DownloadIcon} alt="" />
+                        </div>
+                        <span>Fazer download</span>
+                    </li>
+                    <li onClick={copyLink}>
+                        <div className={styles.icon_box}>
+                            <img src={ShareIcon} alt="" />
+                        </div>
+                        <span>Copiar link</span>
+                    </li>
+                    <li onClick={() => { fetchAndPrintPDF(pdfUrl) }}>
+                        <div className={styles.icon_box}>
+                            <img src={PrintIcon} alt="" />
+                        </div>
+                        <span>Imprimir</span>
+                    </li>
+
+                </ul>
+            )
+        }
+
+        return null;
+    }
+
+    function copyLink() {
+        copy(pdfUrl);
+        toast.success("Link copiado");
+        setIsMenuOpen(false);
+    }
+
+    function handleDownloadPdf() {
+        const formatedTitle = replaceSpacesWithHyphens(book.titulo) + ".pdf";
+        downloadPDF(pdfUrl, formatedTitle);
+    }
+
+    async function downloadPDF(url: string, filename: string) {
+        try {
+            // Fetch the PDF from the URL
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch PDF: ${response.statusText}`);
+            }
+
+            // Get the PDF blob
+            const blob = await response.blob();
+
+            // Create a URL for the blob
+            const blobUrl = URL.createObjectURL(blob);
+
+            // Create a link element
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = filename;
+
+            // Append the link to the document
+            document.body.appendChild(link);
+
+            // Programmatically click the link to trigger the download
+            link.click();
+
+            // Clean up
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+        } catch (error) {
+            console.error('Error downloading PDF:', error);
+        }
+    }
+
+    function replaceSpacesWithHyphens(text: string): string {
+        return text.replace(/ /g, '-');
     }
 
     function renderPdf(link: string) {
@@ -112,52 +227,23 @@ export function PdfPage() {
         )
     }
 
-    function renderMenu(render: boolean) {
-        if (render) {
-            return (
-                <ul className={styles.header_menu}>
-                    <li>
-                        <div className={styles.icon_box}>
-                            <img src={DownloadIcon} alt="" />
-                        </div>
-                        <span>Fazer download</span>
-                    </li>
-                    <li onClick={copyLink}>
-                        <div className={styles.icon_box}>
-                            <img src={ShareIcon} alt="" />
-                        </div>
-                        <span>Copiar link</span>
-                    </li>
-                    <li>
-                        <div className={styles.icon_box}>
-                            <img src={PrintIcon} alt="" />
-                        </div>
-                        <span>Imprimir</span>
-                    </li>
-
-                </ul>
-            )
-        }
-
-        return null;
-    }
-
-    function copyLink() {
-        copy(pdfUrl);
-        toast.success("Link copiado");
-        setIsMenuOpen(false);
+    function onDocumentLoadSuccess({ numPages }: { numPages: number }): void {
+        setNumPages(numPages);
     }
 
     return (
         <div className={styles.main}>
             <header className={styles.header}>
                 <div className={styles.header_container}>
-                    <button className={styles.action_btn} aria-label='voltar'>
-                        <img src={ChevronLeftIcon} alt="" />
+                    <button className={styles.action_btn}>
+                        <img src={ChevronLeftIcon} alt="voltar" />
                     </button>
                     <title>{book.titulo}</title>
-                    <button className={`${styles.action_btn} ${styles.back_button}`} aria-label='menu' onClick={() => { setIsMenuOpen(!isMenuOpen) }}>
-                        <img src={MenuIcon} alt="" />
+                    <button
+                        className={`${styles.action_btn} ${styles.back_button}`}
+                        onClick={() => { setIsMenuOpen(!isMenuOpen) }}
+                    >
+                        <img src={MenuIcon} alt="menu" />
                     </button>
                     {renderMenu(isMenuOpen)}
                 </div>
