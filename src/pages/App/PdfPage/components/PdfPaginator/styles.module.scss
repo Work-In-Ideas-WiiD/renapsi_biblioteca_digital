@@ -9,4 +9,35 @@
     flex-direction: row;
     justify-content: space-around;
     padding: 10px 34px;
+
+    .page_handler {
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        gap: 32px;
+
+        button {
+            background-color: transparent;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    .divisor {
+        height: 100%;
+        width: 1px;
+        background-color: var(--color-gray-300);
+    }
+
+    .page_count {
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        color: var(--color-black);
+    }
 }
