@@ -9,10 +9,13 @@ interface FileCardProps {
 
 export function FileCard({ id, name }: FileCardProps) {
     return (
-        <Link to={`/app/pdf/${id}`} className={styles.card}>
+        <Link
+            to={`/app/pdf/${id}`}
+            className={styles.card}
+        >
             <article>
                 <div className={styles.icon_wraper}>
-                    <img src={IconBook} alt="livro" />
+                    <img loading="lazy" src={IconBook} alt="livro" />
                 </div>
                 <h2>{name}</h2>
             </article>

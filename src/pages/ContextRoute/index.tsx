@@ -1,10 +1,13 @@
 import { Outlet } from "react-router-dom";
 import { AuthContextData } from "../../contexts/AuthContext";
+import { PreviousRouteProvider } from "../../contexts/PreviousRouteContext";
 
 export function ContextRoute() {
     return (
         <AuthContextData>
-            <Outlet />
+            <PreviousRouteProvider>
+                <Outlet />
+            </PreviousRouteProvider>
         </AuthContextData>
 
     )

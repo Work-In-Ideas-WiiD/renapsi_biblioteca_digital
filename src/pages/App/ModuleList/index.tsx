@@ -11,6 +11,9 @@ import { getModulesById } from "../../../services/http/conteudos/module";
 import { toast } from "react-toastify";
 import { Book } from "../../../services/http/conteudos/livros/types";
 import { getBooks } from "../../../services/http/conteudos/livros";
+import { Paginator } from "../../../components/Paginator";
+import { NoContentMessage } from "../../../components/NoContent";
+import { ActivityIndicator } from "../../../components/ActivityIndicator";
 
 
 export function ModuleList() {
@@ -19,11 +22,15 @@ export function ModuleList() {
         id: "",
         icone: ""
     } as Module);
+    const [loading, setLoading] = useState(false);
+    const [pages, setPages] = useState(0);
+    const [page, setPage] = useState(1);
+    const [noContent, setNoContent] = useState(false);
     const [bookList, setBookList] = useState<Book[]>([]);
 
     useEffect(() => {
         fetchModules();
-        fetchBooks();
+        fetchBooks(page);
     }, [])
 
     async function fetchModules() {
@@ -35,17 +42,22 @@ export function ModuleList() {
         }
     }
 
-    async function fetchBooks() {
+    async function fetchBooks(_page: number) {
         try {
-            const { data } = await getBooks();
+            setLoading(true);
+            const { data } = await getBooks(_page);
+            setPages(data.meta.last_page);
+            setNoContent(data.data.length == 0);
             setBookList(data.data);
         } catch (error) {
             toast.error("Houve um erro ao carregar os livros");
+        } finally {
+            setLoading(false);
         }
     }
 
     function renderBookList(_books: Book[]) {
-        if (_books && _books.length > 0) {
+        if (_books && _books.length > 0 && loading == false) {
             return _books.map((book) => {
                 return (
                     <FileCard key={book.id} id={book.id} name={book.titulo} />
@@ -54,6 +66,11 @@ export function ModuleList() {
         }
 
         return null;
+    }
+
+    function onChangePage(_page: number) {
+        setPage(_page);
+        fetchBooks(_page);
     }
 
     return (
@@ -69,8 +86,20 @@ export function ModuleList() {
             <Divisor />
             <section className={styles.files_wraper}>
                 <div className={styles.files_list}>
+                    {
+                        loading && (
+                            <ActivityIndicator />
+                        )
+                    }
                     {renderBookList(bookList)}
+                    {
+                        noContent && !loading && (
+                            <NoContentMessage />
+                        )
+                    }
                 </div>
+
+                <Paginator onPageChange={onChangePage} pageCount={pages} />
             </section>
         </div>
     )

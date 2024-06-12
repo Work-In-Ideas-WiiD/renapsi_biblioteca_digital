@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Module } from "../../../services/http/conteudos/module/types";
 import { getModules } from "../../../services/http/conteudos/module";
+import { ActivityIndicator } from "../../../components/ActivityIndicator";
 
 const formSchema = zod.object({
     search: zod.string(),
@@ -22,6 +23,7 @@ type TFormSchema = zod.infer<typeof formSchema>;
 
 export function Home() {
     const navigator = useNavigate();
+    const [loading, setLoading] = useState(false);
     const [modules, setModules] = useState<Module[]>([]);
     const { handleSubmit, control, reset } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
@@ -31,16 +33,18 @@ export function Home() {
     })
 
     useEffect(() => {
-
         fetchModules();
     }, [])
 
     async function fetchModules() {
         try {
+            setLoading(true);
             const { data } = await getModules();
             setModules(data.data);
         } catch (error) {
             toast.error("Houve um erro ao carregar os modulos");
+        } finally {
+            setLoading(false);
         }
     }
 
@@ -109,7 +113,11 @@ export function Home() {
                         renderModuleList(modules)
                     }
                 </div>
-
+                {
+                    loading && (
+                        <ActivityIndicator />
+                    )
+                }
             </section>
         </div>
     )

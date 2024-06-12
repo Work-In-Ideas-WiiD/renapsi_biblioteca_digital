@@ -8,9 +8,11 @@ import { ConfigPage } from "../../pages/App/Config";
 import { SupportPage } from "../../pages/App/Config/SupportPage";
 import { ContextRoute } from "../../pages/ContextRoute";
 import { PdfPage } from "../../pages/App/PdfPage";
+import { ErrorPage } from "../../pages/ErrorPage";
 
 const router = createBrowserRouter([
     {
+        errorElement: <ErrorPage />,
         element: <ContextRoute />,
         children: [
             {

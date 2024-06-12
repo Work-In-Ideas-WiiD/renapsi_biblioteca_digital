@@ -27,7 +27,7 @@ export function SearchPage() {
     const [pages, setPages] = useState(0);
     const [page, setPage] = useState(1);
     const [noContent, setNoContent] = useState(false);
-    const { handleSubmit, control, reset } = useForm<TFormSchema>({
+    const { handleSubmit, control, reset, getValues } = useForm<TFormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             search: '',
@@ -35,10 +35,10 @@ export function SearchPage() {
     })
 
     useEffect(() => {
-        searchBooksWIthParam();
+        searchBooksWithParam();
     }, []);
 
-    async function searchBooksWIthParam() {
+    async function searchBooksWithParam() {
         const param = getParams();
         if (param) {
             searchBooks(page, param);
@@ -86,7 +86,7 @@ export function SearchPage() {
     }
 
     function renderBooksList(_bookList: Book[]) {
-        if (!_bookList || booksList.length == 0) {
+        if (!_bookList || booksList.length == 0 && loading == false) {
             return null;
         }
 
@@ -97,9 +97,9 @@ export function SearchPage() {
         });
     }
 
-    function onChangePage(page: number) {
-        setPage(page);
-
+    function onChangePage(_page: number) {
+        setPage(_page);
+        searchBooks(_page, getValues("search"));
     }
 
     return (
@@ -124,11 +124,10 @@ export function SearchPage() {
                         renderBooksList(booksList)
                     }
                     {
-                        noContent && (
+                        noContent && !loading && (
                             <NoContentMessage />
                         )
                     }
-
                 </div>
                 <Paginator onPageChange={onChangePage} pageCount={pages} />
             </section>

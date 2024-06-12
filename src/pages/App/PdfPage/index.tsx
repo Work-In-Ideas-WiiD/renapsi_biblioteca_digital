@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { Document, Page } from 'react-pdf'
 import { useEffect, useState } from 'react';
@@ -13,6 +13,7 @@ import DownloadIcon from "../../../assets/svgs/pdfMenu/download.svg";
 import PrintIcon from "../../../assets/svgs/pdfMenu/print.svg";
 import ShareIcon from "../../../assets/svgs/pdfMenu/share.svg";
 import copy from 'copy-to-clipboard';
+import { usePreviousRoute } from '../../../hooks/usePreviousRoute';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "../../../../node_modules/pdfjs-dist/build/pdf.worker.min.mjs",
@@ -21,6 +22,8 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 export function PdfPage() {
     const params = useParams();
+    const { getPreviousLocation } = usePreviousRoute();
+    const navigator = useNavigate();
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [pdfUrl, setPdfUrl] = useState("");
     const [numPages, setNumPages] = useState<number>(0);
@@ -89,26 +92,6 @@ export function PdfPage() {
             toast.error('Erro ao imprimir o pdf');
         } finally {
             setIsMenuOpen(false);
-        }
-    }
-
-    function handlePage(value: "up" | "down") {
-        if (value == "up") {
-            return pageUp();
-        }
-
-        return pageDown();
-    }
-
-    function pageUp() {
-        if (numPages > currentPage) {
-            setCurrentPage(currentPage + 1);
-        }
-    }
-
-    function pageDown() {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
         }
     }
 
@@ -231,11 +214,40 @@ export function PdfPage() {
         setNumPages(numPages);
     }
 
+    function handlePage(value: "up" | "down") {
+        if (value == "up") {
+            return pageUp();
+        }
+
+        return pageDown();
+    }
+
+    function pageUp() {
+        if (numPages > currentPage) {
+            setCurrentPage(currentPage + 1);
+        }
+    }
+
+    function pageDown() {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    }
+
+    function goBack() {
+        const lastRoute = getPreviousLocation();
+
+        if (lastRoute && lastRoute != "") {
+            return navigator(lastRoute);
+        }
+        navigator("app/home");
+    }
+
     return (
         <div className={styles.main}>
             <header className={styles.header}>
                 <div className={styles.header_container}>
-                    <button className={styles.action_btn}>
+                    <button className={styles.action_btn} onClick={goBack}>
                         <img src={ChevronLeftIcon} alt="voltar" />
                     </button>
                     <title>{book.titulo}</title>

@@ -10,7 +10,7 @@ interface PaginatorProps {
 }
 
 export function Paginator({ onPageChange, pageCount }: PaginatorProps) {
-    if (pageCount === 1) return null
+    if (pageCount === 1 || pageCount == 0) return null
 
     return (
         <ReactPaginate

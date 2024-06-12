@@ -33,7 +33,6 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
             getMe().then((response) => {
                 const { data: user_data } = response;
                 setUserData(user_data);
-                navigate("/app/home");
             }).catch(() => {
                 removeAuth();
                 navigate("/");
