@@ -6,6 +6,11 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+
+    .logo_1 {
+        max-height: 27px;
+    }
 
     .button_container {
         width: 47px;

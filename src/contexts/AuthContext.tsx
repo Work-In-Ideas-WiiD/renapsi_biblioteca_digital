@@ -13,6 +13,7 @@ interface IAuthContextDataProps {
 
 export interface IAuthContextData {
     signIn: (email: string, password: string) => Promise<void>,
+    removeAuth: () => void,
     me: UserData,
 }
 
@@ -26,11 +27,22 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
         email_verificado_em: null
     })
     useEffect(() => {
-        const token = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
-        if (token) {
+        const { '@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN': token } = parseCookies();
+        if (token && location.pathname.includes("app")) {
             setAuthToken(token);
+            getMe().then((response) => {
+                const { data: user_data } = response;
+                setUserData(user_data);
+                navigate("/app/home");
+            }).catch(() => {
+                removeAuth();
+                navigate("/");
+            });
         } else {
-            navigate("/");
+
+            if (location.pathname.includes("app")) {
+                navigate("/");
+            }
         }
 
     }, []);
@@ -42,11 +54,6 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
             subscribe();
         }
     }, [removeAuth]);
-
-    async function refreshUserData() {
-        const { data } = await getMe();
-        setUserData(data);
-    }
 
     function setUserData(data: any) {
         setMe(data);
@@ -60,11 +67,10 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
             setAuthToken(login_data.access_token);
             const { data: user } = await getMe();
             setUserData(user);
-            localStorage.setItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN", login_data.access_token);
-            // setCookie(undefined, "renapsi_biblioteca_digital.token", login_data.access_token, {
-            //     maxAge: 60 * 60,
-            //     path: '/'
-            // });
+            setCookie(undefined, "@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN", login_data.access_token, {
+                maxAge: 60 * 60,
+                path: '/'
+            });
             navigate("/app/home");
         } catch (err) {
             console.log(err);
@@ -73,7 +79,6 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
     }
 
     function signOut() {
-        //destroyCookie(undefined, 'renapsi_biblioteca_digital.token');
         setMe({
             id: "",
             admin: false,
@@ -85,14 +90,14 @@ export function AuthContextData({ children }: IAuthContextDataProps) {
     }
 
     function removeAuth() {
-        console.log("remover auth");
-        localStorage.removeItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
+        destroyCookie(undefined, '@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN');
         signOut();
 
     }
 
     return <AuthContext.Provider value={{
         signIn,
+        removeAuth,
         me
     }}>
         {children}

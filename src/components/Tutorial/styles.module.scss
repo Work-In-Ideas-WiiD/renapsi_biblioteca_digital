@@ -40,6 +40,7 @@
         }
 
         .logo_desktop {
+            max-width: 622px;
             display: none;
             padding-top: 144px;
             position: relative;
@@ -132,15 +133,19 @@
         }
 
         .label_page_2 {
-            padding-top: 575px;
+            padding-top: 475px;
 
             @media (max-height: 740px) {
                 padding-top: 430px;
             }
 
-            // @media (min-width: 670px) {
-            //     padding-top: 475px;
-            // }
+            @media (max-width: 670px) {
+                padding-top: 575px;
+            }
+
+            @media (max-height: 760px) {
+                padding-top: 475px;
+            }
 
         }
 

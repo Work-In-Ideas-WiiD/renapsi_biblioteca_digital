@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styles from './styles.module.scss';
 import { CustomButton } from '../form/Button';
-import Logo from "../../assets/imgs/logo_tutorial_desktop.png";
+import Logo from "../../assets/imgs/nova_logo_renapsi.png";
 //page 1
 import ImgBgPage1 from "../../assets/imgs/tutorial_bg_1.jpg";
 import Page1Effect1 from "../../assets/svgs/tutorial_1_effect_1.svg"

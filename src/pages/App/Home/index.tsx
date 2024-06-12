@@ -72,7 +72,7 @@ export function Home() {
         if (_modules && _modules.length > 0) {
 
             return _modules.map((module) => (
-                <Link className={styles.module_card} to={`/app/modulo/${module.id}`}>
+                <Link key={module.id} className={styles.module_card} to={`/app/modulo/${module.id}`}>
                     <article>
                         <img src={module.icone} alt={module.nome} />
                     </article>

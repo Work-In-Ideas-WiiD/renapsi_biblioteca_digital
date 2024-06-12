@@ -77,6 +77,7 @@
         .logo {
             z-index: 2;
             margin-top: 91px;
+            max-height: 37px;
 
             @media (max-height: 700px) {
                 margin-top: 41px;

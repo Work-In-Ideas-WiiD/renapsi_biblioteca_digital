@@ -3,8 +3,10 @@ import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import SupportIcon from "../../../assets/svgs/icon_help_white.svg"
 import ExitIcon from "../../../assets/svgs/icon_exit_white.svg"
+import { useAuth } from "../../../hooks/useAuth";
 
 export function ConfigPage() {
+    const { removeAuth } = useAuth();
 
     return (
         <div className={styles.main}>
@@ -19,7 +21,7 @@ export function ConfigPage() {
                     </Link>
                 </li>
                 <li>
-                    <Link to={"#"} className={styles.link}>
+                    <Link to={"#"} className={styles.link} onClick={removeAuth}>
                         <div className={styles.icon_wraper}>
                             <img src={ExitIcon} alt="sair" />
                         </div>

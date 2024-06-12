@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
+import { parseCookies } from 'nookies';
 
 const controller = new AbortController();
 
@@ -17,7 +18,8 @@ function setAuthToken(token: string) {
     api.defaults.headers.common['Authorization'] = "Bearer" + token;
 }
 function tryToFillTheToken() {
-    const token = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
+    const { '@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN': token } = parseCookies();
+
     if (token) {
         setAuthToken(token);
     }
@@ -40,8 +42,7 @@ api.registerInterceptTokenManager = signOut => {
             console.log("erro 401");
 
             if (requestError.response.data?.message === "Unauthenticated.") {
-                const auth_token = localStorage.getItem("@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN");
-
+                const { '@RENAPSI_BIBLIOTECA_DIGITAL.TOKEN': auth_token } = parseCookies();
                 if (!auth_token) {
                     signOut();
                     return Promise.reject(requestError);

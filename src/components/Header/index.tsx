@@ -1,5 +1,5 @@
 import styles from './styles.module.scss';
-import LogoImg from '../../assets/svgs/logo_header.svg';
+import LogoImg from '../../assets/imgs/nova_logo_renapsi.png';
 import LogoAltImg from '../../assets/svgs/logo_header_alternativa.svg';
 import ChevronIcon from '../../assets/svgs/chevron_left_white.svg';
 import MenuIcon from '../../assets/svgs/menu_icon_white.svg';
