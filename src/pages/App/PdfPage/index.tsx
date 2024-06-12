@@ -14,11 +14,18 @@ import PrintIcon from "../../../assets/svgs/pdfMenu/print.svg";
 import ShareIcon from "../../../assets/svgs/pdfMenu/share.svg";
 import copy from 'copy-to-clipboard';
 import { usePreviousRoute } from '../../../hooks/usePreviousRoute';
+import { shortenText } from '../../../services/utils/shortenText';
 
 pdfjs.GlobalWorkerOptions.workerSrc = new URL(
     "../../../../node_modules/pdfjs-dist/build/pdf.worker.min.mjs",
     import.meta.url,
 ).toString();
+
+const MAX_ZOOM = 2; // 2 === 200%
+const MAX_ZOOM_LABEL = MAX_ZOOM * 100; // 200% / NÃO ALTERAR
+
+const MIN_ZOOM = 1; // 1 === 100%
+const MIN_ZOOM_LABEL = MIN_ZOOM * 100; // 100% / NÃO ALTERAR
 
 export function PdfPage() {
     const params = useParams();
@@ -33,6 +40,8 @@ export function PdfPage() {
         arquivo: "",
         titulo: ""
     } as Book);
+    const [zoomLabel, setZoomLabel] = useState<number>(100);
+    const [relativeZoom, setReleativeZoom] = useState(1);
 
     useEffect(() => {
         fetchPdf();
@@ -192,7 +201,7 @@ export function PdfPage() {
                             renderAnnotationLayer={false}
                             renderTextLayer={false}
                             pageNumber={currentPage}
-                            scale={1}
+                            scale={relativeZoom}
                             loading={"Carregando pdf"}
                             error={"Erro ao carregar o pdf"}
                         />
@@ -202,7 +211,9 @@ export function PdfPage() {
                         <PdfPaginator
                             pages={numPages}
                             currentPage={currentPage}
+                            zoomLabel={zoomLabel}
                             handlePage={handlePage}
+                            handleZoom={handleZoom}
                         />
                     </div>
                 </div>
@@ -243,6 +254,46 @@ export function PdfPage() {
         navigator("app/home");
     }
 
+    function handleZoom(value: "up" | "down") {
+        if (value == "up") {
+            return zoomIn();
+        }
+
+        return zoomOut();
+    }
+
+    function zoomIn() {
+        let currentZoom = relativeZoom;
+        let currentLabel = zoomLabel;
+        if (currentZoom >= MAX_ZOOM || currentLabel >= MAX_ZOOM_LABEL) {
+            setZoomLabel(200);
+            setReleativeZoom(2);
+            return;
+        }
+
+        currentZoom = currentZoom + 0.1;
+        currentLabel = currentLabel + 10;
+
+        setReleativeZoom(currentZoom);
+        setZoomLabel(currentLabel);
+    }
+
+    function zoomOut() {
+        let currentZoom = relativeZoom;
+        let currentLabel = zoomLabel;
+        if (currentZoom <= MIN_ZOOM || currentLabel <= MIN_ZOOM_LABEL) {
+            setZoomLabel(100);
+            setReleativeZoom(1);
+            return;
+        }
+
+        currentZoom = currentZoom - 0.1;
+        currentLabel = currentLabel - 10;
+
+        setReleativeZoom(currentZoom);
+        setZoomLabel(currentLabel);
+    }
+
     return (
         <div className={styles.main}>
             <header className={styles.header}>
@@ -250,7 +301,7 @@ export function PdfPage() {
                     <button className={styles.action_btn} onClick={goBack}>
                         <img src={ChevronLeftIcon} alt="voltar" />
                     </button>
-                    <title>{book.titulo}</title>
+                    <title>{shortenText(book.titulo, 28)}</title>
                     <button
                         className={`${styles.action_btn} ${styles.back_button}`}
                         onClick={() => { setIsMenuOpen(!isMenuOpen) }}
