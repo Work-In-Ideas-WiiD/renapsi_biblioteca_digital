@@ -1,6 +1,5 @@
 import styles from './styles.module.scss';
 import LogoImg from '../../assets/imgs/nova_logo_renapsi.png';
-import LogoAltImg from '../../assets/svgs/logo_header_alternativa.svg';
 import ChevronIcon from '../../assets/svgs/chevron_left_white.svg';
 import MenuIcon from '../../assets/svgs/menu_icon_white.svg';
 import { Link, useNavigate } from 'react-router-dom';
@@ -42,11 +41,12 @@ export function Header({
             {
                 !alternativeLogo && (
                     <img className={styles.logo_1} src={LogoImg} alt="Biblioteca digital" />
+
                 )
             }
             {
                 alternativeLogo && (
-                    <img src={LogoAltImg} alt="Demà jovem by renapsi" />
+                    <title>MENU</title>
                 )
             }
             <div className={styles.button_container}>
