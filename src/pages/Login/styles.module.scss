@@ -15,10 +15,12 @@
             background-position: center;
             aspect-ratio: 16/9;
             background-repeat: no-repeat;
-            background-image: url('../../assets/imgs/bg_login_desktop.jpg');
+            background-image: url('../../assets/imgs/bg_login_desk.png');
+            background-color: rgba(0,0,0,0.5);
+            background-blend-mode: multiply;
 
             @media (min-width: 1700px) {
-                background-size: cover;
+                background-size: contain;
             }
         }
 
