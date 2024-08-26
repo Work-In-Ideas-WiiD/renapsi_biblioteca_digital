@@ -53,8 +53,12 @@ export function Login() {
                 <div className={styles.bg_blur}></div>
             </div>
             <div className={styles.login_wrapper}>
-                <img className={styles.logo} src={Logo} alt="Biblioteca Digital" />
+                
                 <form action="post" onSubmit={handleSubmit(handleLogin)}>
+                <div className="center_button">
+                    <img className={styles.logo} src={RenapsiFooterImg} alt="Biblioteca Digital" /> 
+                </div>    
+                
                     <InputText
                         variant="login"
                         containerClass={styles.mb_40}
@@ -80,9 +84,9 @@ export function Login() {
                     </div>
                 </form>
             </div>
-            <footer>
+            {/* <footer>
                 <img className={styles.logo} src={RenapsiFooterImg} alt="demà jovem by renapsi" />
-            </footer>
+            </footer> */}
         </main>
     )
 }
