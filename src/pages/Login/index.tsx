@@ -1,6 +1,6 @@
 import styles from "./styles.module.scss";
 import RenapsiFooterImg from "../../assets/imgs/renapsi-footer-login.png";
-import BackgroungImg from "../../assets/imgs/login-bg-img.jpg";
+import BackgroungImg from "../../assets/imgs/HOME_Biblioteca Digital.jpg";
 import Logo from "../../assets/imgs/nova_logo_renapsi.png";
 import { InputText } from "../../components/form/InputText";
 import { useForm } from "react-hook-form";

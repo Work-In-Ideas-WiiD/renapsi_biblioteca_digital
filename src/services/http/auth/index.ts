@@ -21,7 +21,7 @@ export async function postLoginMoodle(username: string, password: string): Promi
 }
 
 export async function getMe(): Promise<AxiosResponse<UserData, any>> {
-    const res = await api.get("/auth/me");
+    const res = await api.post("/auth/me");
 
     return res;
 }
