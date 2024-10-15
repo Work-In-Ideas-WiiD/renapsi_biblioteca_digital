@@ -5,9 +5,10 @@ on:
       - 'renapsi_biblioteca_digital-v*.*.*'
       - aws-ci-cd-github-actions
 env:
-  VITE_API_URL: "https://sandbox.livro.garen.wiid.com.br/api"
-  SANDBOX: "https://sandbox.livro.garen.wiid.com.br/api"
-  PROD: "https://sistema.livro.garen.wiid.com.br/api"
+  VITE_API_URL="https://dev-biblioteca.renapsi.org.br/api"
+  SANDBOX="https://sandbox.livro.garen.wiid.com.br/api"
+  PROD="https://dev-biblioteca.renapsi.org.br/api"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
