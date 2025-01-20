@@ -36,6 +36,7 @@ export function ModuleList() {
     async function fetchModules() {
         try {
             const { data } = await getModulesById(id!);
+            setBookList(data.data.livros);   
             setModule(data.data);
         } catch (error) {
             toast.error("Houve um erro ao carregar o modulo");
@@ -48,7 +49,7 @@ export function ModuleList() {
             const { data } = await getBooks(_page);
             setPages(data.meta.last_page);
             setNoContent(data.data.length == 0);
-            setBookList(data.data);
+          //  setBookList(data.data);
         } catch (error) {
             toast.error("Houve um erro ao carregar os livros");
         } finally {
