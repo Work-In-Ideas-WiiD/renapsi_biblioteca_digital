@@ -13,6 +13,12 @@ export async function getBooks(page: number, search?: string): Promise<AxiosResp
     return res;
 }
 
+export async function getRegDownload(id: string): Promise<AxiosResponse<GetBooksRes, any>> {
+    const res = await api.get(`/registrar_download/${id}`);
+
+    return res;
+}
+
 export async function getBookById(id: string): Promise<AxiosResponse<GetBookByIdRes, any>> {
     const res = await api.get(`/conteudos/livro/${id}`);
 

@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { Document, Page } from 'react-pdf'
 import { useEffect, useState } from 'react';
-import { getBookById } from '../../../services/http/conteudos/livros';
+import { getBookById, getRegDownload } from '../../../services/http/conteudos/livros';
 import { toast } from 'react-toastify';
 import { pdfjs } from 'react-pdf';
 import { PdfPaginator } from './components/PdfPaginator';
@@ -64,6 +64,16 @@ export function PdfPage() {
     }
 
     async function fetchAndPrintPDF(url: string) {
+        try{
+            const id = params.id;
+            if (!id) {
+                return
+            }
+            const { data } = await getRegDownload(id);
+        }
+        catch(error){console.log(error)}
+        
+        
         try {
             // Fetch the PDF from the URL
             const response = await fetch(url);
@@ -140,7 +150,15 @@ export function PdfPage() {
         setIsMenuOpen(false);
     }
 
-    function handleDownloadPdf() {
+    async function handleDownloadPdf() {
+        try{
+            const id = params.id;
+            if (!id) {
+                return
+            }
+            const { data } = await getRegDownload(id);
+        }
+        catch(error){console.log(error)}
         const formatedTitle = replaceSpacesWithHyphens(book.titulo) + ".pdf";
         downloadPDF(pdfUrl, formatedTitle);
     }
