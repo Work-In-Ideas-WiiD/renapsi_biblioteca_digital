@@ -2,6 +2,7 @@ import { Header } from "../../../components/Header";
 import styles from "./styles.module.scss";
 import { Link } from "react-router-dom";
 import SupportIcon from "../../../assets/svgs/icon_help_white.svg"
+import RenapsiFooterImg from "../../../assets/imgs/renapsi-footer-login.png";
 import ExitIcon from "../../../assets/svgs/icon_exit_white.svg"
 import { useAuth } from "../../../hooks/useAuth";
 import LogoAltImg from '../../../assets/svgs/logo_header_alternativa.svg';
@@ -36,7 +37,7 @@ export function ConfigPage() {
                 </li>
             </ul>
             <footer>
-                <img src={LogoAltImg} alt="Demà jovem by renapsi" />
+                <img src={RenapsiFooterImg} alt="Demà jovem by renapsi" />
             </footer>
         </div>
     )
